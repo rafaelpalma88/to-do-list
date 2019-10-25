@@ -35,3 +35,8 @@
     font-size: 3.5rem;
   }
 }
+
+.markedAsDone {
+  text-decoration: line-through;
+  color: #777;
+}

@@ -12,24 +12,23 @@ export default class Tarefas extends Component {
         super(props);
 
         this.state = { description: '', list: [] };
-        this.adicionaTarefa = this.adicionaTarefa.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleAdd = this.handleAdd.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
+        this.handleClear = this.handleClear.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleRemove = this.handleRemove.bind(this);
+        this.handleMarkAsDone = this.handleMarkAsDone.bind(this);
+        this.handleMarkAsPending = this.handleMarkAsPending.bind(this);
 
         this.refresh();
+        
     }    
 
-    adicionaTarefa(event) {
-        /*this.setState({value: event.target.value});*/
-        alert('Um nome foi enviado: ' + this.state.value);
-        event.preventDefault();
-    }
-
-    refresh() {
-        axios.get(`${URL}?sort=-createdAt`)
-            .then((resp) => this.setState({...this.state, description: '', list: resp.data }))
+    refresh(description = '') {
+        const search = description ? `&description__regex=/${description}/ig` : ''
+        axios.get(`${URL}?sort=-createdAt${search}`)
+            .then((resp) => this.setState({...this.state, description, list: resp.data }))
     }
 
     handleChange(e) {
@@ -42,16 +41,39 @@ export default class Tarefas extends Component {
     }
 
     handleAdd(e) {
+        console.log(e)
         e.preventDefault();
         const description = this.state.description
         axios.post(URL, {description})
             .then(resp => this.refresh())
     }
 
+
+    handleSearch(e) {
+        e.preventDefault();
+        this.refresh(this.state.description)
+    }
+
+    handleClear(e) {
+        e.preventDefault();
+        this.refresh()
+    }
+
+
     handleRemove(item) {
         console.log(item);
         axios.delete(`${URL}/${item._id}`)
-            .then(resp => this.refresh())
+            .then(resp => this.refresh(this.state.description))
+    }
+
+    handleMarkAsDone(item) {        
+        axios.put(`${URL}/${item._id}`, { ...item, done: true})
+            .then(resp => this.refresh(this.state.description))
+    }
+
+    handleMarkAsPending(item) {
+        axios.put(`${URL}/${item._id}`, { ...item, done: false})
+            .then(resp => this.refresh(this.state.description))
     }
 
     render(){
@@ -64,7 +86,9 @@ export default class Tarefas extends Component {
                             <ToDoForm 
                                 description={this.state.description}
                                 handleAdd={this.handleAdd} 
+                                handleSearch={this.handleSearch} 
                                 handleChange={this.handleChange}
+                                handleClear={this.handleClear}
                                 />                            
                           
                         </div>
@@ -73,6 +97,8 @@ export default class Tarefas extends Component {
                             <ToDoList 
                                 list={this.state.list} 
                                 handleRemove={this.handleRemove}
+                                handleMarkAsDone={this.handleMarkAsDone}
+                                handleMarkAsPending={this.handleMarkAsPending}                                
                                 />
                            
                         </div>                        
