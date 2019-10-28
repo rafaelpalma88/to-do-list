@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { changeDescription, search } from './TodoActions'
+import { add, changeDescription, search } from './TodoActions'
 
 class TodoForm extends Component {
     
@@ -15,9 +15,11 @@ class TodoForm extends Component {
     }
 
     keyHandler = (e) => {
+        const { add, search, description } = this.props
+
         if(e.shiftKey) {
             if (e.key === 'Enter') {
-                e.shiftKey ? this.props.handleSearch() : this.props.handleAdd()           
+                e.shiftKey ? search() : add(description)           
             } else if (e.key === 'Escape') {
                 this.props.handleClear()
             }
@@ -25,24 +27,26 @@ class TodoForm extends Component {
     }
 
     render() {
+        const { add, search, description } = this.props
+
         return(
             <div className="col-md-12">
 
                 <h2>Adicione uma tarefa</h2>
 
-                <form>
+                
                     <input type="text" 
                         placeholder="Adicione uma tarefa" 
                         onChange={this.props.changeDescription}
                         onKeyUp={this.keyHandler}
                         value={this.props.description} 
                         style={{'width': '70%'}} />
-                    <input type="submit" onClick={this.props.handleAdd} value="Adicionar" />
+                    <input type="submit" onClick={() => add(description)} value="Adicionar" />
 
-                    <input type="submit" onClick={this.props.handleSearch} value="Pesquisar" />
+                    <input type="submit" onClick={() => search()} value="Pesquisar" />
 
                     <input type="submit" onClick={this.props.handleClear} value="Limpar" />
-                </form>
+                
 
             </div>
         )
@@ -51,6 +55,6 @@ class TodoForm extends Component {
     
 const mapStateToProps = state => ({ description: state.items.description });
 const mapDispatchToProps = dispatch => 
-    bindActionCreators({ changeDescription, search }, dispatch)
+    bindActionCreators({ add, changeDescription, search }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoForm);

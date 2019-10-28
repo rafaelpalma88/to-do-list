@@ -3,24 +3,23 @@ import axios from 'axios';
 import ToDoForm from '../components/ToDoForm'
 import ToDoList from '../components/ToDoList'
 
-const URL = 'http://localhost:3003/api/todos'
+//const URL = 'http://localhost:3003/api/todos'
 
 export default class Tarefas extends Component {
 
     constructor(props) {
         super(props);
 
-        this.state = { description: '', list: [] };
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleAdd = this.handleAdd.bind(this);
-        this.handleSearch = this.handleSearch.bind(this);
+        //this.state = { description: '', list: [] };        
+        //this.handleAdd = this.handleAdd.bind(this);
+        //this.handleSearch = this.handleSearch.bind(this);
         this.handleClear = this.handleClear.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleRemove = this.handleRemove.bind(this);
         this.handleMarkAsDone = this.handleMarkAsDone.bind(this);
         this.handleMarkAsPending = this.handleMarkAsPending.bind(this);
 
-        this.refresh();
+        //this.refresh();
         
     }    
 
@@ -34,13 +33,10 @@ export default class Tarefas extends Component {
         this.setState({...this.state, description: e.target.value});
     }
 
-    handleSubmit(event) {
-        alert('Um nome foi enviado: ' + this.state.value);
-        event.preventDefault();
-    }
+    
 
     handleAdd(e) {
-        console.log(e)
+        console.log('oi')
         e.preventDefault();
         const description = this.state.description
         axios.post(URL, {description})
@@ -90,9 +86,9 @@ export default class Tarefas extends Component {
                         <div className="row">
                             
                             <ToDoForm 
-                                description={this.state.description}
-                                handleAdd={this.handleAdd} 
-                                handleSearch={this.handleSearch} 
+                                //description={this.state.description}
+                                //handleAdd={this.handleAdd} 
+                                //handleSearch={this.handleSearch} 
                                 handleChange={this.handleChange}
                                 handleClear={this.handleClear}
                                 />                            
@@ -102,9 +98,9 @@ export default class Tarefas extends Component {
     
                             <ToDoList 
                                 //list={this.state.list} 
-                                handleRemove={this.handleRemove}
-                                handleMarkAsDone={this.handleMarkAsDone}
-                                handleMarkAsPending={this.handleMarkAsPending}                                
+                                //handleRemove={this.handleRemove}
+                                //handleMarkAsDone={this.handleMarkAsDone}
+                                //handleMarkAsPending={this.handleMarkAsPending}                                
                                 />
                            
                         </div>  
