@@ -1,41 +1,56 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { changeDescription, search } from './TodoActions'
 
-export default props => {
+class TodoForm extends Component {
+    
+    constructor(props) {
+        super(props)
+        this.keyHandler = this.keyHandler.bind(this)
+    }
 
-    const keyHandler = (e) => {
+    componentWillMount() {
+        this.props.search()
+    }
+
+    keyHandler = (e) => {
         if(e.shiftKey) {
             if (e.key === 'Enter') {
-                e.shiftKey ? props.handleSearch() : props.handleAdd()           
+                e.shiftKey ? this.props.handleSearch() : this.props.handleAdd()           
             } else if (e.key === 'Escape') {
-                props.handleClear()
+                this.props.handleClear()
             }
-        }
-         
-        
+        }  
     }
-    
-    return (
-        <div className="col-md-12">
 
-            <h2>Adicione uma tarefa</h2>
+    render() {
+        return(
+            <div className="col-md-12">
 
-            <form>
-                <input type="text" 
-                    placeholder="Adicione uma tarefa" 
-                    onChange={props.handleChange}
-                    onKeyUp={keyHandler}
-                    value={props.description} 
-                    style={{'width': '70%'}} />
-                <input type="submit" onClick={props.handleAdd} value="Adicionar" />
+                <h2>Adicione uma tarefa</h2>
 
-                <input type="submit" onClick={props.handleSearch} value="Pesquisar" />
+                <form>
+                    <input type="text" 
+                        placeholder="Adicione uma tarefa" 
+                        onChange={this.props.changeDescription}
+                        onKeyUp={this.keyHandler}
+                        value={this.props.description} 
+                        style={{'width': '70%'}} />
+                    <input type="submit" onClick={this.props.handleAdd} value="Adicionar" />
 
-                <input type="submit" onClick={props.handleClear} value="Limpar" />
-            </form>
+                    <input type="submit" onClick={this.props.handleSearch} value="Pesquisar" />
 
-        </div>
-    )  
-    
+                    <input type="submit" onClick={this.props.handleClear} value="Limpar" />
+                </form>
+
+            </div>
+        )
+    }
 }
     
+const mapStateToProps = state => ({ description: state.items.description });
+const mapDispatchToProps = dispatch => 
+    bindActionCreators({ changeDescription, search }, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoForm);
