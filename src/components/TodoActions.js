@@ -16,9 +16,45 @@ export const search = () => {
 }
 
 export const add = (description) => {
-    const request = axios.post(URL, {description})
-    return {
-        type: 'TODO_ADDED',
-        payload: request
+    
+    return dispatch => {
+        axios.post(URL, {description})
+            .then(resp => dispatch(clear()))
+            .then(resp => dispatch(search()))
     }
+    
+}
+
+export const markAsDone = (item) => {
+    
+    return dispatch => {
+        axios.put(`${URL}/${item._id}`, { ...item, done: true})
+            .then(resp => dispatch({ type: 'TODO_MARKED_AS_DONE', payload: resp.data }))
+            .then(resp => dispatch(search()))
+    }
+    
+}
+
+export const markAsPending = (item) => {
+    
+    return dispatch => {
+        axios.put(`${URL}/${item._id}`, { ...item, done: false})
+            .then(resp => dispatch({ type: 'TODO_MARKED_AS_PENDING', payload: resp.data }))
+            .then(resp => dispatch(search()))
+    }
+    
+}
+
+export const remove = (item) => {
+    
+    return dispatch => {
+        axios.delete(`${URL}/${item._id}`)
+            //.then(resp => dispatch({ type: 'TODO_MARKED_AS_PENDING', payload: resp.data }))
+            .then(resp => dispatch(search()))
+    }
+    
+}
+
+export const clear = () => {        
+    return { type: 'TODO_CLEAR' }    
 }

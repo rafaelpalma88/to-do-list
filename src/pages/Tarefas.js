@@ -89,8 +89,8 @@ export default class Tarefas extends Component {
                                 //description={this.state.description}
                                 //handleAdd={this.handleAdd} 
                                 //handleSearch={this.handleSearch} 
-                                handleChange={this.handleChange}
-                                handleClear={this.handleClear}
+                                //handleChange={this.handleChange}
+                                //handleClear={this.handleClear}
                                 />                            
                           
                         </div>
