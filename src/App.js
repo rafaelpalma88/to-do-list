@@ -12,11 +12,12 @@ import './App.css';
 import Tarefas from './pages/Tarefas'
 import Sobre from './pages/Sobre'
 
-//const tarefas = ['tarefa1','tarefa2','tarefa3','tarefa4']        
 
 function App() {
   return (
     <div className="App">
+
+     
      
       <Router>
         <div>

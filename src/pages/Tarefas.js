@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-
 import ToDoForm from '../components/ToDoForm'
 import ToDoList from '../components/ToDoList'
 
@@ -81,6 +80,13 @@ export default class Tarefas extends Component {
             <div>
                 <main role="main">                    
                     <div className="container" style={{'marginTop': '100px'}}>        
+                        
+                        
+                        <div style={{'padding': '40px'}}>
+                            {/*<TesteRedux />*/}
+                        </div>
+                        
+                        
                         <div className="row">
                             
                             <ToDoForm 
@@ -95,13 +101,17 @@ export default class Tarefas extends Component {
                         <div className="row" style={{'marginTop': '100px'}}>
     
                             <ToDoList 
-                                list={this.state.list} 
+                                //list={this.state.list} 
                                 handleRemove={this.handleRemove}
                                 handleMarkAsDone={this.handleMarkAsDone}
                                 handleMarkAsPending={this.handleMarkAsPending}                                
                                 />
                            
-                        </div>                        
+                        </div>  
+
+
+                        
+                                        
                     </div> 
                 </main> 
             </div>
@@ -109,3 +119,4 @@ export default class Tarefas extends Component {
     }
     
 }
+

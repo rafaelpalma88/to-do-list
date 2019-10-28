@@ -1,6 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux'
 
-export default props => {
+const TodoList = props => {
 
     return(
         <div className="col-md-12">
@@ -11,9 +12,9 @@ export default props => {
                     <div key={item._id}>                    
                         <p>
                             <span className={ item.done ? 'markedAsDone' : ''}> { item.description } </span>                             
-                            <a onClick={() => props.handleRemove(item)}> || Excluir || </a>
-                            <a onClick={() => props.handleMarkAsDone(item)} style={{ display: item.done? 'none' : 'inline-block' }}> Marcar com feito || </a>
-                            <a onClick={() => props.handleMarkAsPending(item)}  style={{ display: item.done? 'inline-block' : 'none' }}> Voltar para nao feito</a>
+                            <span onClick={() => props.handleRemove(item)}> || Excluir || </span>
+                            <span onClick={() => props.handleMarkAsDone(item)} style={{ display: item.done? 'none' : 'inline-block' }}> Marcar com feito || </span>
+                            <span onClick={() => props.handleMarkAsPending(item)}  style={{ display: item.done? 'inline-block' : 'none' }}> Voltar para nao feito</span>
                         </p>                      
                     </div>
                 )}                
@@ -24,9 +25,8 @@ export default props => {
 
 }
 
+const mapStateToProps = state => ({
+    list: state.items.list
+});
 
-
-
-
-
-
+export default connect(mapStateToProps)(TodoList);
