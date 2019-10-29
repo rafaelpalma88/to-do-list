@@ -9,7 +9,7 @@ const TodoList = props => {
         <div className="col-md-12">
         <h2>Descrição</h2>
 
-            <div>
+            <div>                
                 {props.list.map((item) => 
                     <div key={item._id}>                    
                         <p>
@@ -18,8 +18,8 @@ const TodoList = props => {
                             <span onClick={() => props.markAsDone(item)} style={{ display: item.done? 'none' : 'inline-block' }}> Marcar com feito || </span>
                             <span onClick={() => props.markAsPending(item)}  style={{ display: item.done? 'inline-block' : 'none' }}> Voltar para nao feito</span>
                         </p>                      
-                    </div>
-                )}                
+                </div>
+                )}    
             </div>
 
         </div>
