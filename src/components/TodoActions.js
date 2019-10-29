@@ -11,7 +11,7 @@ export const search = () => {
     return(dispatch, getState) => {
         const description = getState().items.description                
         const search = description ? `&description__regex=/${description}/ig` : ''        
-        const request = axios.get(`${URL}?sort=-createdAt${search}`)        
+        axios.get(`${URL}?sort=-createdAt${search}`)        
             .then(resp => dispatch({ type: 'TODO_SEARCHED', payload: resp.data}))
     }
 }

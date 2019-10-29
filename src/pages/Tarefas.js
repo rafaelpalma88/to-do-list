@@ -1,32 +1,21 @@
-import React, {Component} from 'react';
-import axios from 'axios';
+import React from 'react';
 import ToDoForm from '../components/ToDoForm'
 import ToDoList from '../components/ToDoList'
 
-export default class Tarefas extends Component {
+export default props => (
+    <div>
+        <main role="main">                    
+            <div className="container" style={{'marginTop': '100px'}}>        
+                
+                <div className="row">                            
+                    <ToDoForm />     
+                </div>
 
-    constructor(props) {
-        super(props);
-    }    
-
-    render(){
-        return (
-            <div>
-                <main role="main">                    
-                    <div className="container" style={{'marginTop': '100px'}}>        
-                        
-                        <div className="row">                            
-                            <ToDoForm />     
-                        </div>
-
-                        <div className="row" style={{'marginTop': '100px'}}>    
-                            <ToDoList />                           
-                        </div>                          
-                                        
-                    </div> 
-                </main> 
-            </div>
-        )
-    }    
-}
-
+                <div className="row" style={{'marginTop': '100px'}}>    
+                    <ToDoList />                           
+                </div>                          
+                                
+            </div> 
+        </main> 
+    </div>
+)
